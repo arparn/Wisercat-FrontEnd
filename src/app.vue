@@ -1,17 +1,22 @@
 <template>
-  <header>
-    <div class="wrapper">
-      <p>Hello World!</p>
-    </div>
-  </header>
+<!--  <header>-->
+<!--    <div class="wrapper">-->
+<!--      <p>Hello World!</p>-->
+<!--    </div>-->
+<!--  </header>-->
 
   <main>
+    <FilterPage />
   </main>
 </template>
 
 <script>
+
+import FilterPage from "./pages/filter/filter-page.vue";
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: { FilterPage }
 }
 </script>
 

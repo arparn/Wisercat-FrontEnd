@@ -2,6 +2,6 @@ export const filterRoutes = [
 	{
 		path: '/filter',
 		name: 'Filter',
-		component: () => import('./filter-page')
+		component: () => import('./filter-page.vue')
 	}
 ]
