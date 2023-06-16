@@ -18,6 +18,6 @@ app.use(BootstrapVueNext)
 
 app.mount('#app')
 
-ApiBackendService.init({serverUri: ''}) // TODO add backend url
-
 export default app
+
+ApiBackendService.init({serverUri: 'http://localhost:8080/dev'})
