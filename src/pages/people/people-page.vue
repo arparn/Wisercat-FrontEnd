@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Hello World! {{getPerson}}</p>
+    <p>Hello World!</p>
     <b-button @click="get">Button</b-button>
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script>
 import {BButton} from "bootstrap-vue-next";
 import {createNamespacedHelpers} from "vuex";
-import {FETCH_PERSON} from "./store/filter.action-types";
+import {FETCH_PEOPLE} from "./store/people.action-types";
 
 const { mapActions, mapGetters } = createNamespacedHelpers('filterModule')
 
@@ -17,19 +17,19 @@ export default {
   components: {BButton},
   computed: {
     ...mapGetters({
-      getPerson: 'getPerson'
+      getPeople: 'getPeople'
     })
   },
   methods: {
     ...mapActions({
-      fetchPerson:FETCH_PERSON
+      fetchPeople: FETCH_PEOPLE
     }),
 
     get() {
-      if (this.getPerson == null) {
-        this.fetchPerson()
+      if (this.getPeople == null) {
+        this.fetchPeople()
       }
-      console.log(this.getPerson)
+      console.log(this.getPeople)
     }
   }
 }

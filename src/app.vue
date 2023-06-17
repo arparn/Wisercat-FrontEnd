@@ -12,7 +12,7 @@
 
 <script>
 
-import FilterPage from "./pages/filter/filter-page.vue";
+import FilterPage from "./pages/people/people-page.vue";
 
 export default {
   name: 'App',

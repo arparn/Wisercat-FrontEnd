@@ -1,9 +1,9 @@
 import { createStore } from "vuex";
 
-import { filterModule } from "../pages/filter";
+import { peopleModule } from "../pages/people";
 
 export const configureStore = createStore({
 	modules: {
-		filterModule
+		filterModule: peopleModule
 	}
 })

@@ -20,4 +20,4 @@ app.mount('#app')
 
 export default app
 
-ApiBackendService.init({serverUri: 'http://localhost:8080/dev'})
+ApiBackendService.init({serverUri: 'http://localhost:8080'})

@@ -1,2 +1,2 @@
 export { filterRoutes } from './routes'
-export { filterModule } from './store'
+export { peopleModule } from './store'

@@ -1,4 +1,4 @@
-import { filterRoutes } from "./filter";
+import { filterRoutes } from "./people";
 
 export const routes = [
 		...filterRoutes
