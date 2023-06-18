@@ -9,12 +9,24 @@ import { BootstrapVueNext } from "bootstrap-vue-next";
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
+import format from "date-fns/format";
+import en from "date-fns/esm/locale/en-US";
 
 const app = createApp(App)
 
 app.use(configureStore)
 app.use(router)
 app.use(BootstrapVueNext)
+
+// Global Filters
+
+app.config.globalProperties.$filters = {
+	formatDate(value) {
+		// Example output June 1st 2001.
+		return value ? format(new Date(value), 'MMMM do yyyy', { locale: en }) : ''
+	}
+}
+
 
 app.mount('#app')
 

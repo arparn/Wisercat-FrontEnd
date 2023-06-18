@@ -1,7 +1,10 @@
 <template>
-  <div>
-    <p>Hello World!</p>
-    <b-button @click="get">Button</b-button>
+  <div class="d-flex align-self-start justify-content-start">
+    <div class="d-flex align-self-start">
+      <b-button @click="get">Add Filter</b-button>
+    </div>
+    <AppliedFilters />
+    <PeopleTable />
   </div>
 </template>
 
@@ -9,12 +12,14 @@
 import {BButton} from "bootstrap-vue-next";
 import {createNamespacedHelpers} from "vuex";
 import {FETCH_PEOPLE} from "./store/people.action-types";
+import {AppliedFilters} from "../../ui/filter";
+import {PeopleTable} from "./molecules";
 
 const { mapActions, mapGetters } = createNamespacedHelpers('filterModule')
 
 export default {
-  name: "FilterPage",
-  components: {BButton},
+  name: "PeoplePage",
+  components: {PeopleTable, AppliedFilters, BButton},
   computed: {
     ...mapGetters({
       getPeople: 'getPeople'
@@ -25,12 +30,12 @@ export default {
       fetchPeople: FETCH_PEOPLE
     }),
 
-    get() {
-      if (this.getPeople == null) {
-        this.fetchPeople()
+    async get() {
+      if (this.getPeople.length === 0) {
+       await this.fetchPeople()
       }
-      console.log(this.getPeople)
-    }
+      console.log(this.$filters.formatDate(this.getPeople.content[0].birthDate))
+    },
   }
 }
 </script>

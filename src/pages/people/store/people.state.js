@@ -3,17 +3,17 @@ import {AGE_COMPARATOR} from "../people-constants";
 
 export const initialPeopleFilter = () => ({
 	name: null,
-	age: 22,
-	ageComparator: AGE_COMPARATOR.EQUAL.value,
+	age: 23,
+	ageComparator: AGE_COMPARATOR.LESS_OR_EQUAL.value,
 	page: 0,
 	pageSize: 10,
-	sortOrder: SORT_ORDER.DESC,
-	sortColumn: 'age',
+	sortOrder: SORT_ORDER.ASC,
+	sortColumn: 'birthDate',
 })
 
 export const initialState = () => ({
 
 	peopleFilter: initialPeopleFilter(),
-	people: null
+	people: []
 
 })
