@@ -1,10 +1,9 @@
-import {SORT_ORDER} from "../../../store/constants";
-import {AGE_COMPARATOR} from "../people-constants";
+import {AMOUNT_COMPARATOR, SORT_ORDER} from "../../../../constants.js";
 
 export const initialPeopleFilter = () => ({
 	name: null,
 	age: 23,
-	ageComparator: AGE_COMPARATOR.LESS_OR_EQUAL.value,
+	ageComparator: AMOUNT_COMPARATOR.LESS_OR_EQUAL.value,
 	page: 0,
 	pageSize: 10,
 	sortOrder: SORT_ORDER.ASC,

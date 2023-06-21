@@ -1,9 +1,7 @@
 <template>
-  <div class="d-flex align-self-start justify-content-start">
-    <div class="d-flex align-self-start">
-      <b-button @click="get">Add Filter</b-button>
-    </div>
-    <AppliedFilters />
+  <div class="d-flex flex-column justify-content-between">
+    <Filter class="mb-4"/>
+    <b-button @click="get">GET</b-button>
     <PeopleTable />
   </div>
 </template>
@@ -12,14 +10,14 @@
 import {BButton} from "bootstrap-vue-next";
 import {createNamespacedHelpers} from "vuex";
 import {FETCH_PEOPLE} from "./store/people.action-types";
-import {AppliedFilters} from "../../ui/filter";
 import {PeopleTable} from "./molecules";
+import {Filter} from "../../ui/filter";
 
 const { mapActions, mapGetters } = createNamespacedHelpers('filterModule')
 
 export default {
   name: "PeoplePage",
-  components: {PeopleTable, AppliedFilters, BButton},
+  components: {Filter, PeopleTable, BButton},
   computed: {
     ...mapGetters({
       getPeople: 'getPeople'

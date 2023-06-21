@@ -1,7 +1,8 @@
-export const AGE_COMPARATOR = Object.freeze({
-	LESS: { value: 'less', text: 'less' },
-	LESS_OR_EQUAL: { value: 'less-or-equal', text: 'less or equal' },
-	GREATER: { value: 'greater', text: 'greater' },
-	GREATER_OR_EQUAL: { value: 'greater-or-equal', text: 'greater or equal' },
-	EQUAL: { value: 'equal', text: 'equal' }
+import {AMOUNT_COMPARATOR, DATE_CRITERIA, STRING_CRITERIA} from "../../../constants.js";
+
+export const FILTER_TYPE = Object.freeze({
+	AGE: { value: 'AMOUNT', text: 'AGE', criteria: AMOUNT_COMPARATOR },
+	NAME: { value: 'STRING', text: 'NAME', criteria: STRING_CRITERIA },
+	SURNAME: { value: 'STRING', text: 'SURNAME', criteria: STRING_CRITERIA },
+	DATE: { value: 'DATE', text: 'DATE OF BIRTH', criteria: DATE_CRITERIA }
 })
