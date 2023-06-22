@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column align-self-start justify-content-start">
-    <FilterModal :filters="getFilters"/>
+    <FilterModal :availableFilters="getFilters"/>
     <AppliedFilters />
   </div>
 </template>

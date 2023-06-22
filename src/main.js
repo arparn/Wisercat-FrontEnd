@@ -7,6 +7,7 @@ import { configureStore } from "./store";
 import { router } from "./routes";
 import { BootstrapVueNext } from "bootstrap-vue-next";
 
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 import format from "date-fns/format";
