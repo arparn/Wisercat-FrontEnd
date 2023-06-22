@@ -8,11 +8,11 @@
       hide-footer
       size="lg"
   >
-    <b-container fluid class="pb-3">
+    <b-container fluid class="filter-content">
       <b-row class="justify-content-center">
         <b-col lg="2" md="2" sm="2" cols="3">Filter name</b-col>
-        <b-col >
-          <b-form-input class="min-w" v-model="filter.name" placeholder="My Filter 1" type="text"/>
+        <b-col>
+          <b-form-input class="adjusted-w" v-model="filter.name" placeholder="My Filter 1" type="text"/>
         </b-col>
       </b-row>
       <b-row class="justify-content-center">
@@ -22,24 +22,26 @@
         <b-col>
           <b-row v-if="hasSubFilters" v-for="subFilter in filter.subFilters" class="pt-3">
             <b-col>
-              <b-form-select class="min-w" v-model="subFilter.type" :options="availableFilters" />
+              <b-form-select class="adjusted-w" v-model="subFilter.type" :options="availableFilters" />
             </b-col>
             <b-col>
-              <b-form-select class="min-w" v-model="subFilter.criteria" :options="getCriteriaOptions" />
+              <b-form-select class="adjusted-w" v-model="subFilter.criteria" :options="getCriteriaOptions" />
             </b-col>
             <b-col>
-              <b-form-input class="min-w" v-model="subFilter.value" />
+              <b-form-input class="adjusted-w" v-model="subFilter.value" />
             </b-col>
             <b-col lg="1" md="2" sm="2" cols="2">
-              <b-button variant="danger" @click="removeSubFilter(subFilter)">
-                <i class="bi bi-trash"></i>
-              </b-button>
+              <div class="w-100 d-flex justify-content-center">
+                <b-button variant="danger" @click="removeSubFilter(subFilter)">
+                  <i class="bi bi-trash" />
+                </b-button>
+              </div>
             </b-col>
           </b-row>
-          <b-row class="justify-content-center mt-3">
-            <b-button class="w-auto" @click="addSubFilter">+ ADD ROW</b-button>
-          </b-row>
         </b-col>
+      </b-row>
+      <b-row class="justify-content-center mt-3">
+        <b-button class="w-auto" @click="addSubFilter">+ ADD ROW</b-button>
       </b-row>
     </b-container>
     <div class="d-flex justify-content-center my-4">
@@ -76,7 +78,6 @@ export default {
     return {
       filterModal: false,
       newSubFilter: {
-        id: Math.random().toString(36),
         type: this.availableFilters[0].value,
         criteria: undefined,
         value: undefined
@@ -101,6 +102,9 @@ export default {
     hasSubFilters() {
       return this.filter.subFilters.length !== 0;
     },
+  },
+  watch: {
+    // TODO add sub-filter type watcher to adjust criteria
   },
   beforeMount() {
     if (this.existingFilter) {
@@ -134,11 +138,20 @@ export default {
 </script>
 
 <style scoped lang="postcss">
+
+.filter-content {
+  padding-bottom: 16px;
+  height: 16rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .width-100 {
   width: 100px;
 }
 
-.min-w {
+.adjusted-w {
   min-width: 5rem;
+  max-width: 12rem;
 }
 </style>
