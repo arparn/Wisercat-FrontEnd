@@ -8,42 +8,7 @@
       hide-footer
       size="lg"
   >
-    <b-container fluid class="filter-content">
-      <b-row class="justify-content-center">
-        <b-col lg="2" md="2" sm="2" cols="3">Filter name</b-col>
-        <b-col>
-          <b-form-input class="adjusted-w" v-model="filter.name" placeholder="My Filter 1" type="text"/>
-        </b-col>
-      </b-row>
-      <b-row class="justify-content-center">
-        <b-col lg="2" md="2" sm="2" cols="3">
-          <p class="mt-3 mb-0">Criteria</p>
-        </b-col>
-        <b-col>
-          <b-row v-if="hasSubFilters" v-for="subFilter in filter.subFilters" class="pt-3">
-            <b-col>
-              <b-form-select class="adjusted-w" v-model="subFilter.type" :options="availableFilters" />
-            </b-col>
-            <b-col>
-              <b-form-select class="adjusted-w" v-model="subFilter.criteria" :options="getCriteriaOptions" />
-            </b-col>
-            <b-col>
-              <b-form-input class="adjusted-w" v-model="subFilter.value" />
-            </b-col>
-            <b-col lg="1" md="2" sm="2" cols="2">
-              <div class="w-100 d-flex justify-content-center">
-                <b-button variant="danger" @click="removeSubFilter(subFilter)">
-                  <i class="bi bi-trash" />
-                </b-button>
-              </div>
-            </b-col>
-          </b-row>
-        </b-col>
-      </b-row>
-      <b-row class="justify-content-center mt-3">
-        <b-button class="w-auto" @click="addSubFilter">+ ADD ROW</b-button>
-      </b-row>
-    </b-container>
+    <filter-content :available-filters="this.availableFilters" />
     <div class="d-flex justify-content-center my-4">
       <b-row class="py-1 justify-content-center">
         <b-col>
@@ -58,12 +23,12 @@
 </template>
 
 <script>
-import {BButton, BCol, BModal, BRow, BContainer, BFormInput, BFormSelect} from "bootstrap-vue-next";
-import {cloneDeep} from "lodash";
+import {BButton, BCol, BModal, BRow} from "bootstrap-vue-next";
+import FilterContent from "../molecules/filter-content.vue";
 
 export default {
   name: "FilterModal",
-  components: {BRow, BCol, BButton, BModal, BContainer, BFormInput, BFormSelect},
+  components: {FilterContent, BRow, BCol, BButton, BModal},
   props: {
     availableFilters: {
       type: Array,
@@ -72,45 +37,15 @@ export default {
     existingFilter: {
       type: Object,
       default: undefined,
+    },
+    savedFilters: {
+      type: Object,
+      default: undefined,
     }
   },
   data() {
     return {
       filterModal: false,
-      newSubFilter: {
-        type: this.availableFilters[0].value,
-        criteria: undefined,
-        value: undefined
-      },
-      filter: {
-        name: undefined,
-        subFilters: []
-      }
-    }
-  },
-  computed: {
-    getCriteriaOptions() {
-      if (this.availableFilters.length !== null) {
-        let criteria = this.availableFilters.find((filter) => filter.value === this.newSubFilter.type).criteria
-
-        return Object.keys(criteria).map((type) => criteria[type])
-      }
-
-      return []
-    },
-
-    hasSubFilters() {
-      return this.filter.subFilters.length !== 0;
-    },
-  },
-  watch: {
-    // TODO add sub-filter type watcher to adjust criteria
-  },
-  beforeMount() {
-    if (this.existingFilter) {
-      this.filter = cloneDeep(this.existingFilter)
-    } else {
-      this.addSubFilter()
     }
   },
   methods: {
@@ -122,14 +57,6 @@ export default {
       this.filterModal = false
     },
 
-    addSubFilter() {
-      this.filter.subFilters.push(cloneDeep(this.newSubFilter))
-    },
-
-    removeSubFilter(filter) {
-      this.filter.subFilters = this.filter.subFilters.filter((subFilter) => subFilter !== filter)
-    },
-
     save() {
       // TODO
     }
@@ -138,20 +65,7 @@ export default {
 </script>
 
 <style scoped lang="postcss">
-
-.filter-content {
-  padding-bottom: 16px;
-  height: 16rem;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
 .width-100 {
   width: 100px;
-}
-
-.adjusted-w {
-  min-width: 5rem;
-  max-width: 12rem;
 }
 </style>

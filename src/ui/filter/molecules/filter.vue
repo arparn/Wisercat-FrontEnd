@@ -1,19 +1,19 @@
 <template>
   <div class="d-flex flex-column align-self-start justify-content-start">
     <FilterModal :availableFilters="getFilters"/>
-    <AppliedFilters />
+    <ExistingFilters />
   </div>
 </template>
 
 <script>
 import {BButton} from "bootstrap-vue-next";
-import AppliedFilters from "./applied-filters.vue";
+import ExistingFilters from "./existing-filters.vue";
 import FilterModal from "../modals/filter-modal.vue";
 import {FILTER_TYPE} from "../../../pages/people/people-constants.js";
 
 export default {
   name: "Filter",
-  components: {FilterModal, AppliedFilters, BButton},
+  components: {FilterModal, ExistingFilters, BButton},
   props: {},
   computed: {
     getFilters() {

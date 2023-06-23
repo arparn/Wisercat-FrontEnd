@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "AppliedFilters"
+  name: "ExistingFilters"
 }
 </script>
 
