@@ -1,7 +1,6 @@
 <template>
   <div class="d-flex flex-column justify-content-between">
     <Filter class="mb-4"/>
-    <b-button @click="get">GET</b-button>
     <PeopleTable />
   </div>
 </template>

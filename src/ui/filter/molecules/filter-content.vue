@@ -34,16 +34,18 @@
     <b-row class="justify-content-center mt-3">
       <b-button class="w-auto" @click="addSubFilter">+ ADD ROW</b-button>
     </b-row>
+    <ExistingFilters :filters="getExistingFilters" />
   </b-container>
 </template>
 
 <script>
 import {BButton, BCol, BRow, BContainer, BFormInput, BFormSelect} from "bootstrap-vue-next";
 import {cloneDeep} from "lodash";
+import ExistingFilters from "./existing-filters.vue";
 
 export default {
   name: "FilterContent",
-  components: {BRow, BCol, BButton, BContainer, BFormInput, BFormSelect},
+  components: {ExistingFilters, BRow, BCol, BButton, BContainer, BFormInput, BFormSelect},
   props: {
     availableFilters: {
       type: Array,
@@ -54,8 +56,8 @@ export default {
       default: undefined,
     },
     savedFilters: {
-      type: Object,
-      default: undefined,
+      type: Array,
+      default: [],
     }
   },
   data() {
@@ -74,6 +76,10 @@ export default {
   computed: {
     showDeleteButton() {
       return this.filter.subFilters.length > 1;
+    },
+
+    getExistingFilters() {
+      return this.savedFilters.length !== 0 ? this.savedFilters.map((filter) => filter.name) : []
     }
   },
   watch: {
@@ -88,7 +94,7 @@ export default {
   },
   methods: {
     addSubFilter() {
-      console.log(this.filter)
+      console.log(this.filter) //TODO remove
       this.filter.subFilters.push(cloneDeep(this.newSubFilter))
     },
 
