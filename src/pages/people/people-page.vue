@@ -1,7 +1,11 @@
 <template>
   <div class="d-flex flex-column justify-content-between">
     <Filter class="mb-4"/>
-    <Table :items="getPeople.content" />
+    <Table
+        :items="getItems"
+        :pagination="getPagination"
+        @pageChange="updatePagination"
+    />
   </div>
 </template>
 
@@ -20,8 +24,24 @@ export default {
   components: {Table, Filter, BButton},
   computed: {
     ...mapGetters({
-      getPeople: 'getPeople'
+      getPeople: 'getPeople',
+      getFilter: 'getFilter'
     }),
+
+    getPagination() {
+      return {
+        page: this.getFilter.page + 1,
+        pageSize: this.getFilter.pageSize,
+        totalItems: this.getPeople.totalElements
+      }
+    },
+
+    getItems() {
+      return this.getPeople.content ? this.getPeople.content.map((person) => { return {
+        ...person,
+        ...{birthDate: this.$filters.formatDate(person.birthDate)}
+      }}) : []
+    }
   },
   beforeMount() {
     this.fetchPeople()
@@ -34,9 +54,14 @@ export default {
       setFilter: SET_FILTER
     }),
 
-    async get() {
-      await this.fetchPeople()
-      console.log(this.$filters.formatDate(this.getPeople.content[0].birthDate))
+    updatePagination(event) {
+      this.setFilter({ filter: event })
+    },
+
+    async get() { // TODO remove
+      console.log(this.getFilter)
+      //await this.fetchPeople()
+      //console.log(this.$filters.formatDate(this.getPeople.content[0].birthDate))
     },
   }
 }

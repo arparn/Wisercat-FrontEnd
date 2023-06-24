@@ -12,12 +12,15 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 import format from "date-fns/format";
 import en from "date-fns/esm/locale/en-US";
+import VueAxios from "vue-axios";
+import axios from "axios";
 
 const app = createApp(App)
 
 app.use(configureStore)
 app.use(router)
 app.use(BootstrapVueNext)
+app.use(VueAxios, axios)
 
 // Global Filters
 

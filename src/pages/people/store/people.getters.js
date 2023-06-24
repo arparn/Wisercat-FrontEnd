@@ -4,8 +4,8 @@ export const getters = {
 		return state.people
 	},
 
-	getFilter() {
-		return this.state.peopleFilter
+	getFilter(state) {
+		return state.peopleFilter
 	}
 
 }

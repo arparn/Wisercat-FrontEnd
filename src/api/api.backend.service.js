@@ -1,6 +1,5 @@
 import app from "../main";
 import axios from "axios";
-import VueAxios from "vue-axios";
 import querystring from 'querystring'
 
 const CONTENT_TYPE = 'Content-Type'
@@ -20,7 +19,6 @@ export const ApiBackendService = {
 	init({ serverUri, options = { headers: {} } }) {
 		let defaultOptions = this.options(options)
 
-		app.use(VueAxios, axios)
 		app.axios.defaults[defaultOptions.serviceName] = serverUri
 		app.axios.defaults.options = defaultOptions
 	},
