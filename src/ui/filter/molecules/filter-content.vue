@@ -94,7 +94,6 @@ export default {
   },
   methods: {
     addSubFilter() {
-      console.log(this.filter) //TODO remove
       this.filter.subFilters.push(cloneDeep(this.newSubFilter))
     },
 

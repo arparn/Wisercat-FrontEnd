@@ -21,3 +21,7 @@ export const DATE_CRITERIA = Object.freeze({
 	TO: { value: 'TO', text: 'to' },
 	ON: { value: 'ON', text: 'on' }
 })
+
+export const FILTER_TYPE = Object.freeze({
+	PERSON: 'PERSON'
+})

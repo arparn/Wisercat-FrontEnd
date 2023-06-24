@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column justify-content-between">
     <Filter class="mb-4"/>
-    <PeopleTable />
+    <Table :items="getPeople.content" />
   </div>
 </template>
 
@@ -9,34 +9,35 @@
 import {BButton} from "bootstrap-vue-next";
 import {createNamespacedHelpers} from "vuex";
 import {FETCH_PEOPLE} from "./store/people.action-types";
-import {PeopleTable} from "./molecules";
 import {Filter} from "../../ui/filter";
+import {Table} from "../../ui/table";
+import {SET_FILTER} from "./store/people.mutation-types";
 
-const { mapActions, mapGetters } = createNamespacedHelpers('filterModule')
+const { mapActions, mapGetters, mapMutations } = createNamespacedHelpers('filterModule')
 
 export default {
   name: "PeoplePage",
-  components: {Filter, PeopleTable, BButton},
+  components: {Table, Filter, BButton},
   computed: {
     ...mapGetters({
       getPeople: 'getPeople'
-    })
+    }),
+  },
+  beforeMount() {
+    this.fetchPeople()
   },
   methods: {
     ...mapActions({
       fetchPeople: FETCH_PEOPLE
     }),
+    ...mapMutations({
+      setFilter: SET_FILTER
+    }),
 
     async get() {
-      if (this.getPeople.length === 0) {
-       await this.fetchPeople()
-      }
+      await this.fetchPeople()
       console.log(this.$filters.formatDate(this.getPeople.content[0].birthDate))
     },
   }
 }
 </script>
-
-<style scoped>
-
-</style>
