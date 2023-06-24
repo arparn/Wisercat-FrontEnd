@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column align-self-start justify-content-start">
-    <FilterModal :availableFilters="getFilters"/>
-    <ExistingFilters />
+    <FilterModal :filterParams="filterParams" :saved-filters="existingFilters" :selected-filter="selectedFilter" />
+    <ExistingFilters :filters="existingFilters" :selected-filter="selectedFilter.name" @selectFilter="selectFilter" />
   </div>
 </template>
 
@@ -9,18 +9,31 @@
 import {BButton} from "bootstrap-vue-next";
 import ExistingFilters from "./existing-filters.vue";
 import FilterModal from "../modals/filter-modal.vue";
-import {FILTER_TYPE} from "../../../pages/people/people-constants.js";
+import {FILTER_TYPE_PERSON} from "../../../pages/people/people-constants.js";
 
 export default {
   name: "Filter",
   components: {FilterModal, ExistingFilters, BButton},
-  props: {},
-  computed: {
-    getFilters() {
-      return Object.keys(FILTER_TYPE).map((type) => FILTER_TYPE[type])
+  props: {
+    filterParams: {
+      type: Array,
+      required: true
+    },
+    existingFilters: {
+      type: Array,
+      default:[]
+    }
+  },
+  data() {
+    return {
+      selectedFilter: undefined
     }
   },
   methods: {
+    selectFilter(filter) {
+      this.selectedFilter = filter
+    },
+
     addFilter() {
       // TODO
     }

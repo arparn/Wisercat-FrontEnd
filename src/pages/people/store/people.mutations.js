@@ -1,4 +1,4 @@
-import {SET_FILTER, SET_PEOPLE} from "./people.mutation-types";
+import {SET_FILTER, SET_PEOPLE, SET_PEOPLE_FILTERS} from "./people.mutation-types";
 
 export const mutations = {
 
@@ -9,5 +9,9 @@ export const mutations = {
 	[SET_FILTER](state, { filter }) {
 		state.peopleFilter = { ...state.peopleFilter, ...filter }
 	},
+
+	[SET_PEOPLE_FILTERS](state, existingFilters) {
+		state.existingFilters = existingFilters
+	}
 
 }

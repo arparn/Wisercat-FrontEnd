@@ -13,6 +13,7 @@ export const initialPeopleFilter = () => ({
 export const initialState = () => ({
 
 	peopleFilter: initialPeopleFilter(),
-	people: []
+	people: [],
+	existingFilters: []
 
 })

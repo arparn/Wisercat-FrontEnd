@@ -2,7 +2,7 @@
   <b-form-group v-if="hasExistingFilters" label="Saved filters" v-slot="{ savedFilters }">
     <b-form-radio-group
         v-model="filter"
-        :options="filters"
+        :options="getFilters"
         :aria-describedby="savedFilters"
         name="saved-filters"
     />
@@ -29,6 +29,16 @@ export default {
   computed: {
     hasExistingFilters() {
       return this.filters.length !== 0
+    },
+
+    getFilters() {
+      return this.filters.map((filter) => {
+        return {value: filter.name, text: filter.name}
+      })
+    },
+
+    getSelectedFilter() {
+      return this.filters.find((filter) => filter.name === this.filter)
     }
   },
   data() {
@@ -36,9 +46,21 @@ export default {
       filter: undefined
     }
   },
+  watch: {
+    filter: {
+      handler() {
+        this.selectFilter()
+      }
+    }
+  },
   beforeMount() {
     if (this.selectedFilter) {
       this.filter = cloneDeep(this.selectedFilter)
+    }
+  },
+  methods: {
+    selectFilter() {
+      this.$emit('selectFilter', this.getSelectedFilter)
     }
   }
 }

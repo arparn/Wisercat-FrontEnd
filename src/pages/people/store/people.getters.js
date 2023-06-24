@@ -6,6 +6,9 @@ export const getters = {
 
 	getFilter(state) {
 		return state.peopleFilter
-	}
+	},
 
+	getExistingFilters(state) {
+		return state.existingFilters;
+	}
 }

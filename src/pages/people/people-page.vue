@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column justify-content-between">
-    <Filter class="mb-4"/>
+    <Filter :filter-params="getFilterParams" :existing-filters="getExistingFilters" class="mb-4"/>
     <Table
         :items="getItems"
         :pagination="getPagination"
@@ -12,10 +12,11 @@
 <script>
 import {BButton} from "bootstrap-vue-next";
 import {createNamespacedHelpers} from "vuex";
-import {FETCH_PEOPLE} from "./store/people.action-types";
+import {FETCH_PEOPLE, FETCH_PEOPLE_FILTERS} from "./store/people.action-types";
 import {Filter} from "../../ui/filter";
 import {Table} from "../../ui/table";
 import {SET_FILTER} from "./store/people.mutation-types";
+import {FILTER_TYPE_PERSON} from "./people-constants";
 
 const { mapActions, mapGetters, mapMutations } = createNamespacedHelpers('filterModule')
 
@@ -25,8 +26,13 @@ export default {
   computed: {
     ...mapGetters({
       getPeople: 'getPeople',
-      getFilter: 'getFilter'
+      getFilter: 'getFilter',
+      getExistingFilters: 'getExistingFilters'
     }),
+
+    getFilterParams() {
+      return Object.keys(FILTER_TYPE_PERSON).map((type) => FILTER_TYPE_PERSON[type])
+    },
 
     getPagination() {
       return {
@@ -37,18 +43,22 @@ export default {
     },
 
     getItems() {
-      return this.getPeople.content ? this.getPeople.content.map((person) => { return {
-        ...person,
-        ...{birthDate: this.$filters.formatDate(person.birthDate)}
-      }}) : []
+      return this.getPeople.content ? this.getPeople.content.map((person) => {
+        return {
+          ...person,
+          ...{birthDate: this.$filters.formatDate(person.birthDate)}
+        }
+      }) : []
     }
   },
   beforeMount() {
     this.fetchPeople()
+    this.fetchPeopleFilters()
   },
   methods: {
     ...mapActions({
-      fetchPeople: FETCH_PEOPLE
+      fetchPeople: FETCH_PEOPLE,
+      fetchPeopleFilters: FETCH_PEOPLE_FILTERS
     }),
     ...mapMutations({
       setFilter: SET_FILTER
@@ -56,13 +66,7 @@ export default {
 
     updatePagination(event) {
       this.setFilter({ filter: event })
-    },
-
-    async get() { // TODO remove
-      console.log(this.getFilter)
-      //await this.fetchPeople()
-      //console.log(this.$filters.formatDate(this.getPeople.content[0].birthDate))
-    },
+    }
   }
 }
 </script>

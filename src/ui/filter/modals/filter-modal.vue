@@ -8,7 +8,11 @@
       hide-footer
       size="lg"
   >
-    <filter-content :available-filters="this.availableFilters" />
+    <filter-content
+        :filter-params="filterParams"
+        :selected-filter="selectedFilter"
+        :saved-filters="savedFilters"
+    />
     <div class="d-flex justify-content-center my-4">
       <b-row class="py-1 justify-content-center">
         <b-col>
@@ -30,16 +34,16 @@ export default {
   name: "FilterModal",
   components: {FilterContent, BRow, BCol, BButton, BModal},
   props: {
-    availableFilters: {
+    filterParams: {
       type: Array,
       required: true,
     },
-    existingFilter: {
+    selectedFilter: {
       type: Object,
       default: undefined,
     },
     savedFilters: {
-      type: Object,
+      type: Array,
       default: undefined,
     }
   },

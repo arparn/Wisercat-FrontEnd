@@ -13,7 +13,7 @@
       <b-col>
         <b-row v-for="subFilter in filter.subFilters" class="pt-3">
           <b-col>
-            <b-form-select class="adjusted-w" v-model="subFilter.key" :options="availableFilters" />
+            <b-form-select class="adjusted-w" v-model="subFilter.key" :options="filterParams" />
           </b-col>
           <b-col>
             <b-form-select class="adjusted-w" v-model="subFilter.criteria" :options="getCriteriaOptions(subFilter.key)" />
@@ -34,7 +34,7 @@
     <b-row class="justify-content-center mt-3">
       <b-button class="w-auto" @click="addSubFilter">+ ADD ROW</b-button>
     </b-row>
-    <ExistingFilters :filters="getExistingFilters" />
+    <ExistingFilters :filters="getExistingFilters" :selected-filter="selectedFilter.name" />
   </b-container>
 </template>
 
@@ -47,11 +47,11 @@ export default {
   name: "FilterContent",
   components: {ExistingFilters, BRow, BCol, BButton, BContainer, BFormInput, BFormSelect},
   props: {
-    availableFilters: {
+    filterParams: {
       type: Array,
       required: true,
     },
-    existingFilter: {
+    selectedFilter: {
       type: Object,
       default: undefined,
     },
@@ -63,12 +63,13 @@ export default {
   data() {
     return {
       newSubFilter: {
-        key: this.availableFilters[0].value,
+        key: this.filterParams[0].value,
         criteria: undefined,
         value: undefined
       },
       filter: {
         name: undefined,
+        type: undefined,
         subFilters: []
       }
     }
@@ -86,8 +87,8 @@ export default {
     // TODO add filter watcher to emit update event
   },
   beforeMount() {
-    if (this.existingFilter) {
-      this.filter = cloneDeep(this.existingFilter)
+    if (this.selectedFilter) {
+      this.filter = cloneDeep(this.selectedFilter)
     } else {
       this.addSubFilter()
     }
@@ -102,8 +103,8 @@ export default {
     },
 
     getCriteriaOptions(key) {
-      if (this.availableFilters.length !== null) {
-        let criteria = this.availableFilters.find((filter) => filter.value === key).criteria
+      if (this.filterParams.length !== null) {
+        let criteria = this.filterParams.find((filter) => filter.value === key).criteria
 
         return Object.keys(criteria).map((type) => criteria[type])
       }

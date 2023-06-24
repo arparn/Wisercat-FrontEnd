@@ -1,2 +1,3 @@
 export const SET_PEOPLE = 'SET_PEOPLE'
 export const SET_FILTER = 'SET_FILTER'
+export const SET_PEOPLE_FILTERS = 'SET_PEOPLE_FILTERS'
