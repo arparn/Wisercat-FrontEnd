@@ -1,6 +1,13 @@
 <template>
   <div class="d-flex flex-column justify-content-between">
-    <Filter :filter-params="getFilterParams" :existing-filters="getExistingFilters" class="mb-4" />
+    <Filter
+        :filter-params="getFilterParams"
+        :existing-filters="getExistingFilters"
+        class="mb-4"
+        @saveFilter="save"
+        @deleteFilter="removeFilter"
+        @applyFilter="applyFilter"
+    />
     <Table
         :items="getItems"
         :pagination="getPagination"
@@ -12,11 +19,12 @@
 <script>
 import {BButton} from "bootstrap-vue-next";
 import {createNamespacedHelpers} from "vuex";
-import {FETCH_PEOPLE, FETCH_PEOPLE_FILTERS} from "./store/people.action-types";
+import {DELETE_FILTER, FETCH_PEOPLE, FETCH_PEOPLE_FILTERS, SAVE_FILTER} from "./store/people.action-types";
 import {Filter} from "../../ui/filter";
 import {Table} from "../../ui/table";
 import {SET_FILTER} from "./store/people.mutation-types";
 import {FILTER_TYPE_PERSON} from "./people-constants";
+import {FILTER_TYPE} from "../../../constants";
 
 const { mapActions, mapGetters, mapMutations } = createNamespacedHelpers('filterModule')
 
@@ -58,14 +66,46 @@ export default {
   methods: {
     ...mapActions({
       fetchPeople: FETCH_PEOPLE,
-      fetchPeopleFilters: FETCH_PEOPLE_FILTERS
+      fetchPeopleFilters: FETCH_PEOPLE_FILTERS,
+      saveFilter: SAVE_FILTER,
+      deleteFilter: DELETE_FILTER,
     }),
     ...mapMutations({
       setFilter: SET_FILTER
     }),
 
-    updatePagination(event) {
-      this.setFilter({ filter: event })
+    get(subFilters, key) {
+      return subFilters.map((filter) => filter[key])
+    },
+
+    async setSubFilters(filter) {
+      await this.setFilter({
+        filter: {
+          keys: filter ? this.get(filter.subFilters, 'key') : [],
+          criteria: filter ? this.get(filter.subFilters, 'criteria') : [],
+          values: filter ? this.get(filter.subFilters, 'value') : [],
+          page: 0
+        }
+      })
+    },
+
+    async updatePagination(event) {
+      await this.setFilter({ filter: event })
+      this.fetchPeople()
+    },
+
+    async save(filter) {
+      await this.setSubFilters(filter)
+      this.saveFilter({...filter, filterType: FILTER_TYPE.PERSON})
+    },
+
+    removeFilter(id) {
+      this.deleteFilter({id})
+    },
+
+    async applyFilter(filter) {
+      await this.setSubFilters(filter)
+      this.fetchPeople()
     }
   }
 }

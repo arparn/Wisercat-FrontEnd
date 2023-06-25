@@ -34,6 +34,6 @@ app.config.globalProperties.$filters = {
 
 export default app
 
-ApiBackendService.init({serverUri: 'http://localhost:9999'})
+ApiBackendService.init({serverUri: 'http://localhost:8080'})
 
 app.mount('#app')

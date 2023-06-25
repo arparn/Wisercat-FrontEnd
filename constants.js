@@ -12,8 +12,10 @@ export const AMOUNT_COMPARATOR = Object.freeze({
 })
 
 export const STRING_CRITERIA = Object.freeze({
-	EQUALS: { value: 'EQUALS', text: 'equals' },
-	CONTAINS: { value: 'CONTAINS', text: 'contains' }
+	EQUALS: { value: 'EQUAL', text: 'equals' },
+	CONTAINS: { value: 'CONTAINS', text: 'contains' },
+	STARTS_WITH: { value: 'STARTS_WITH', text: 'starts with' },
+	ENDS_WITH: { value: 'ENDS_WITH', text: 'ends with' }
 })
 
 export const DATE_CRITERIA = Object.freeze({

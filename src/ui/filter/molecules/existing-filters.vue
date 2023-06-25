@@ -1,22 +1,21 @@
 <template>
-  <b-form-group v-if="hasExistingFilters" label="Saved filters" v-slot="{ savedFilters }">
+  <b-form-group label="Saved filters" v-slot="{ savedFilters }">
     <b-form-radio-group
         v-model="filter"
-        :options="getFilters"
         :aria-describedby="savedFilters"
         name="saved-filters"
-        @click="handleClick"
-    />
+    >
+      <b-form-radio v-for="filter in filters" :value="filter.name" @click="handleClick(filter.name)">{{filter.name}}</b-form-radio>
+    </b-form-radio-group>
   </b-form-group>
 </template>
 
 <script>
-import {BFormGroup, BFormRadioGroup} from "bootstrap-vue-next";
-import {cloneDeep} from "lodash";
+import {BFormGroup, BFormRadio, BFormRadioGroup} from "bootstrap-vue-next";
 
 export default {
   name: "ExistingFilters",
-  components: {BFormRadioGroup, BFormGroup},
+  components: {BFormRadio, BFormRadioGroup, BFormGroup},
   props: {
     selectedFilter: {
       type: String,
@@ -48,27 +47,31 @@ export default {
     }
   },
   watch: {
+    selectedFilter: {
+      deep: true,
+      handler() {
+        this.filter = this.selectedFilter
+      }
+    },
     filter: {
       handler() {
         this.selectFilter()
       }
     }
   },
-  beforeMount() {
-    if (this.selectedFilter) {
-      this.filter = cloneDeep(this.selectedFilter)
-    }
-  },
   methods: {
-    handleClick() {
-      if (this.filter) {
+    handleClick(filter) {
+      if (this.filter === filter) {
         this.filter = undefined
+      } else {
+        this.filter = filter
       }
     },
 
     selectFilter() {
       this.$emit('selectFilter', this.getSelectedFilter)
     }
+
   }
 }
 </script>

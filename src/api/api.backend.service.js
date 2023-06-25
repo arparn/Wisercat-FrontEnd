@@ -64,6 +64,23 @@ export const ApiBackendService = {
 		return this.request('GET', url, reqOptions)
 	},
 
+	post(url, body, options) {
+		let reqOptions = this.options(options)
+
+		if (reqOptions && reqOptions.params) {
+			url = applyQueryParameters(url, reqOptions.params)
+			reqOptions.params = null
+		}
+
+		return this.request('POST', url, { body, ...reqOptions })
+	},
+
+	delete(url, body, options) {
+		let reqOptions = this.options(options)
+
+		return this.request('DELETE', url, { body, ...reqOptions })
+	},
+
 	options(options) {
 		return { ...options, serviceName: 'backend' }
 	},

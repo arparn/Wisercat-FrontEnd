@@ -39,14 +39,17 @@ export default {
     }
   },
   watch: {
+    pagination: {
+      deep: true,
+      handler() {
+        this.page = this.pagination.page
+      }
+    },
     page: {
       handler() {
         this.changePage()
       }
     }
-  },
-  beforeMount() {
-    this.page = this.pagination.page
   },
   computed: {
     getPageSize() {
@@ -55,7 +58,7 @@ export default {
   },
   methods: {
     changePage() {
-      this.$emit('pageChange', { page: this.page })
+      this.$emit('pageChange', { page: this.page - 1 })
     }
   }
 }

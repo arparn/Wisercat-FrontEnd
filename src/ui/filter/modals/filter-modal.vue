@@ -1,8 +1,6 @@
 <template>
-  <div class="d-flex align-self-start">
-    <b-button @click="showModal">+ Add Filter</b-button>
-  </div>
   <b-modal
+      v-if="filterModal"
       v-model="filterModal"
       title="Filter"
       hide-footer
@@ -11,7 +9,8 @@
     <filter-content
         :filter-params="filterParams"
         :selected-filter="selectedFilter"
-        :saved-filters="savedFilters"
+        @updateFilter="updateFilter"
+        @deleteFilter="deleteFilter"
     />
     <div class="d-flex justify-content-center my-4">
       <b-row class="py-1 justify-content-center">
@@ -19,7 +18,7 @@
           <b-button class="width-100" @click="hideModal">CLOSE</b-button>
         </b-col>
         <b-col>
-          <b-button class="width-100" @click="save">SAVE</b-button>
+          <b-button class="width-100" variant="primary" @click="save">SAVE</b-button>
         </b-col>
       </b-row>
     </div>
@@ -42,27 +41,48 @@ export default {
       type: Object,
       default: undefined,
     },
-    savedFilters: {
-      type: Array,
-      default: undefined,
+    showModal: {
+      type: Boolean,
+      required: true,
     }
   },
   data() {
     return {
       filterModal: false,
+      filter: undefined,
+    }
+  },
+  watch: {
+    showModal: {
+      handler() {
+        this.filterModal = this.showModal
+      }
+    },
+    filterModal: {
+      handler() {
+        if (!this.filterModal) {
+          this.hideModal()
+        }
+      }
     }
   },
   methods: {
-    showModal() {
-      this.filterModal = true
+    hideModal() {
+      this.$emit('hideModal')
     },
 
-    hideModal() {
-      this.filterModal = false
+    updateFilter(filter) {
+      this.filter = filter
+    },
+
+    deleteFilter(id) {
+      this.$emit('deleteFilter', id)
+      this.hideModal()
     },
 
     save() {
-      // TODO
+      this.$emit('saveFilter', this.filter)
+      this.hideModal()
     }
   }
 }

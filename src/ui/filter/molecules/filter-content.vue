@@ -5,6 +5,11 @@
       <b-col>
         <b-form-input class="adjusted-w" v-model="filter.name" placeholder="My Filter 1" type="text"/>
       </b-col>
+      <b-col v-if="canDeleteFilter">
+        <div class="w-100 d-flex justify-content-end">
+          <b-button variant="danger" @click="deleteFilter"><i class="bi bi-trash" /> Delete Filter</b-button>
+        </div>
+      </b-col>
     </b-row>
     <b-row class="justify-content-center">
       <b-col lg="2" md="2" sm="2" cols="3">
@@ -34,7 +39,6 @@
     <b-row class="justify-content-center mt-3">
       <b-button class="w-auto" @click="addSubFilter">+ ADD ROW</b-button>
     </b-row>
-    <ExistingFilters :filters="savedFilters" :selected-filter="getSelectedFilter()" />
   </b-container>
 </template>
 
@@ -54,10 +58,6 @@ export default {
     selectedFilter: {
       type: Object,
       default: undefined,
-    },
-    savedFilters: {
-      type: Array,
-      default: [],
     }
   },
   data() {
@@ -78,9 +78,18 @@ export default {
     showDeleteButton() {
       return this.filter.subFilters.length > 1;
     },
+
+    canDeleteFilter() {
+      return this.filter.id
+    }
   },
   watch: {
-    // TODO add filter watcher to emit update event
+    filter: {
+      deep: true,
+      handler() {
+        this.updateFilter()
+      }
+    },
   },
   beforeMount() {
     if (this.selectedFilter) {
@@ -108,12 +117,12 @@ export default {
       return []
     },
 
-    getSelectedFilter() { // TODO move to mixin
-      return this.selectedFilter ? this.selectedFilter.name : undefined
+    deleteFilter() {
+      this.$emit('deleteFilter', this.filter.id)
     },
 
-    save() {
-      // TODO
+    updateFilter() {
+      this.$emit('updateFilter', this.filter)
     }
   }
 }
