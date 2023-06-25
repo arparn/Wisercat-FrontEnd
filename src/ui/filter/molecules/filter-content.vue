@@ -34,7 +34,7 @@
     <b-row class="justify-content-center mt-3">
       <b-button class="w-auto" @click="addSubFilter">+ ADD ROW</b-button>
     </b-row>
-    <ExistingFilters :filters="getExistingFilters" :selected-filter="selectedFilter.name" />
+    <ExistingFilters :filters="savedFilters" :selected-filter="getSelectedFilter()" />
   </b-container>
 </template>
 
@@ -78,10 +78,6 @@ export default {
     showDeleteButton() {
       return this.filter.subFilters.length > 1;
     },
-
-    getExistingFilters() {
-      return this.savedFilters.length !== 0 ? this.savedFilters.map((filter) => filter.name) : []
-    }
   },
   watch: {
     // TODO add filter watcher to emit update event
@@ -110,6 +106,10 @@ export default {
       }
 
       return []
+    },
+
+    getSelectedFilter() { // TODO move to mixin
+      return this.selectedFilter ? this.selectedFilter.name : undefined
     },
 
     save() {

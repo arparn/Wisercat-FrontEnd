@@ -5,6 +5,7 @@
         :options="getFilters"
         :aria-describedby="savedFilters"
         name="saved-filters"
+        @click="handleClick"
     />
   </b-form-group>
 </template>
@@ -59,6 +60,12 @@ export default {
     }
   },
   methods: {
+    handleClick() {
+      if (this.filter) {
+        this.filter = undefined
+      }
+    },
+
     selectFilter() {
       this.$emit('selectFilter', this.getSelectedFilter)
     }

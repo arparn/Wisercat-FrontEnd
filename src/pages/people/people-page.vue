@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column justify-content-between">
-    <Filter :filter-params="getFilterParams" :existing-filters="getExistingFilters" class="mb-4"/>
+    <Filter :filter-params="getFilterParams" :existing-filters="getExistingFilters" class="mb-4" />
     <Table
         :items="getItems"
         :pagination="getPagination"
