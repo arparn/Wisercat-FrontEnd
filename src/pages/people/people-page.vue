@@ -25,6 +25,7 @@ import {Table} from "../../ui/table";
 import {SET_FILTER} from "./store/people.mutation-types";
 import {FILTER_TYPE_PERSON} from "./people-constants";
 import {FILTER_TYPE} from "../../../constants";
+import cloneDeep from "lodash/cloneDeep";
 
 const { mapActions, mapGetters, mapMutations } = createNamespacedHelpers('filterModule')
 
@@ -75,7 +76,11 @@ export default {
     }),
 
     get(subFilters, key) {
-      return subFilters.map((filter) => filter[key])
+      return subFilters.map(
+          (filter) => key === 'value' && filter.key === FILTER_TYPE_PERSON.DATE.value
+                  ? this.$filters.formatDateJava(filter[key])
+                  : filter[key]
+      )
     },
 
     async setSubFilters(filter) {

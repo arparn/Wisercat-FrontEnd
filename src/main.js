@@ -28,6 +28,11 @@ app.config.globalProperties.$filters = {
 	formatDate(value) {
 		// Example output June 1st 2001.
 		return value ? format(new Date(value), 'MMMM do yyyy', { locale: en }) : ''
+	},
+
+	formatDateJava(value) {
+		// Example output 31/12/1998.
+		return value ? format(new Date(value), 'dd/MM/yyyy', { locale: en }) : ''
 	}
 }
 

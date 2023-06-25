@@ -24,7 +24,7 @@
             <b-form-select class="adjusted-w" v-model="subFilter.criteria" :options="getCriteriaOptions(subFilter.key)" />
           </b-col>
           <b-col>
-            <b-form-input class="adjusted-w" v-model="subFilter.value" />
+            <b-form-input class="adjusted-w" v-model="subFilter.value" :type="getInputType(subFilter.key)" />
           </b-col>
           <b-col v-if="showDeleteButton" lg="1" md="2" sm="2" cols="2">
             <div class="w-100 d-flex justify-content-center">
@@ -44,8 +44,10 @@
 
 <script>
 import {BButton, BCol, BRow, BContainer, BFormInput, BFormSelect} from "bootstrap-vue-next";
-import {cloneDeep} from "lodash";
+import cloneDeep from 'lodash/cloneDeep';
 import ExistingFilters from "./existing-filters.vue";
+import {FILTER_TYPE_PERSON} from "../../../pages/people/people-constants";
+import {AMOUNT_COMPARATOR, FILTER_CRITERIA_TYPE} from "../../../../constants";
 
 export default {
   name: "FilterContent",
@@ -64,8 +66,8 @@ export default {
     return {
       newSubFilter: {
         key: this.filterParams[0].value,
-        criteria: undefined,
-        value: undefined
+        criteria: null,
+        value: null
       },
       filter: {
         name: undefined,
@@ -108,13 +110,34 @@ export default {
     },
 
     getCriteriaOptions(key) {
-      if (this.filterParams.length !== null) {
-        let criteria = this.filterParams.find((filter) => filter.value === key).criteria
+      const filterParamsCopy = cloneDeep(this.filterParams)
+
+      if (filterParamsCopy.length !== null) {
+        let criteria = filterParamsCopy.find((filter) => filter.value === key).criteria
 
         return Object.keys(criteria).map((type) => criteria[type])
       }
 
       return []
+    },
+
+    getInputType(key) {
+      const filterParamsCopy = cloneDeep(this.filterParams)
+
+      if (filterParamsCopy.length !== null) {
+        let type = filterParamsCopy.find((filter) => filter.value === key).type
+
+        switch (type) {
+          case FILTER_CRITERIA_TYPE.AMOUNT:
+            return 'number'
+          case FILTER_CRITERIA_TYPE.DATE:
+            return 'date'
+          default:
+            return 'text'
+        }
+      }
+
+      return 'text'
     },
 
     deleteFilter() {

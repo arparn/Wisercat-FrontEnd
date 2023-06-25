@@ -3,6 +3,12 @@ export const SORT_ORDER = Object.freeze({
 	ASC: 'ASC',
 })
 
+export const FILTER_CRITERIA_TYPE = Object.freeze({
+	AMOUNT: 'AMOUNT',
+	STRING: 'STRING',
+	DATE: 'DATE'
+})
+
 export const AMOUNT_COMPARATOR = Object.freeze({
 	LESS: { value: 'LESS', text: 'less' },
 	LESS_OR_EQUAL: { value: 'LESS_OR_EQUAL', text: 'less or equal' },
