@@ -46,8 +46,7 @@
 import {BButton, BCol, BRow, BContainer, BFormInput, BFormSelect} from "bootstrap-vue-next";
 import cloneDeep from 'lodash/cloneDeep';
 import ExistingFilters from "./existing-filters.vue";
-import {FILTER_TYPE_PERSON} from "../../../pages/people/people-constants";
-import {AMOUNT_COMPARATOR, FILTER_CRITERIA_TYPE} from "../../../../constants";
+import {FILTER_CRITERIA_TYPE} from "../../../../constants";
 
 export default {
   name: "FilterContent",

@@ -18,7 +18,9 @@
           <b-button class="width-100" @click="hideModal">CLOSE</b-button>
         </b-col>
         <b-col>
-          <b-button class="width-100" variant="primary" @click="save">SAVE</b-button>
+          <div :class="{ 'disabled': isSaveDisabled }">
+            <b-button class="width-100" variant="primary" :disabled="isSaveDisabled" @click="save">SAVE</b-button>
+          </div>
         </b-col>
       </b-row>
     </div>
@@ -44,6 +46,13 @@ export default {
     showModal: {
       type: Boolean,
       required: true,
+    }
+  },
+  computed: {
+    isSaveDisabled() {
+      return !(this.filter && (this.filter.name &&
+          this.filter.subFilters.length !== 0 &&
+          !this.filter.subFilters.find((filter) => !filter.criteria || !filter.value)))
     }
   },
   data() {
@@ -91,5 +100,9 @@ export default {
 <style scoped lang="postcss">
 .width-100 {
   width: 100px;
+}
+
+.disabled {
+  cursor: not-allowed;
 }
 </style>
