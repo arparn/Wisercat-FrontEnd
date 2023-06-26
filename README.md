@@ -1,6 +1,6 @@
 # Wisercat-FrontEnd  
 
-To run application use the following commands:  
+To run the application use the following commands:  
 
 `npm install`  
 
