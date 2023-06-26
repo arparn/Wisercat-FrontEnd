@@ -5,7 +5,7 @@ export const initialPeopleFilter = () => ({
 	criteria: [],
 	values: [],
 	page: 0,
-	pageSize: 2,
+	pageSize: 8,
 	sortOrder: SORT_ORDER.ASC,
 	sortColumn: 'name',
 })
