@@ -10,6 +10,14 @@
         </b-col>
       </b-row>
     </div>
+<!--    <FilterEmbedded-->
+<!--        :filterParams="filterParams"-->
+<!--        :selected-filter="selectedFilter"-->
+<!--        :show-filter="filterModal"-->
+<!--        @hideFilter="hideModal"-->
+<!--        @saveFilter="saveFilter"-->
+<!--        @deleteFilter="deleteFilter"-->
+<!--    />-->
     <ExistingFilters
         :filters="existingFilters"
         :selected-filter="getSelectedFilter()"
@@ -30,10 +38,11 @@
 import {BButton, BRow, BCol} from "bootstrap-vue-next";
 import ExistingFilters from "./existing-filters.vue";
 import FilterModal from "../modals/filter-modal.vue";
+import FilterEmbedded from "./filter-embedded.vue";
 
 export default {
   name: "Filter",
-  components: {FilterModal, ExistingFilters, BButton, BRow, BCol},
+  components: {FilterEmbedded, FilterModal, ExistingFilters, BButton, BRow, BCol},
   props: {
     filterParams: {
       type: Array,

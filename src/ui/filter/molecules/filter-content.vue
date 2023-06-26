@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid class="filter-content">
+  <b-container fluid :class="{'filter-content': modal}">
     <b-row class="justify-content-center">
       <b-col lg="2" md="2" sm="2" cols="3">Filter name</b-col>
       <b-col>
@@ -59,6 +59,10 @@ export default {
     selectedFilter: {
       type: Object,
       default: undefined,
+    },
+    modal: {
+      type: Boolean,
+      default: true,
     }
   },
   data() {
